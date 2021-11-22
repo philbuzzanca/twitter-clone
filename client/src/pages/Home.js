@@ -11,20 +11,20 @@ const Home = () => {
     } = useQuery(FETCH_POSTS_QUERY);
     return (
         <Grid columns={1}>
-            <Grid.Row>
-                <h1>Recent posts</h1>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column>
+            <Grid.Column>
+                <Grid.Row>
+                    <h1>Recent posts</h1>
+                </Grid.Row>
+                <Grid.Row>
                     {loading ? (
                         <h1>Loading posts</h1>
                     ) : (
                         data.getPosts && data.getPosts.map((post) => (
-                            <PostCard post={post} key={post.id}/>
+                            <PostCard post={post} key={post.id} />
                         ))
                     )}
-                </Grid.Column>
-            </Grid.Row>
+                </Grid.Row>
+            </Grid.Column>
         </Grid>
     )
 }
