@@ -40,7 +40,7 @@ const PostCard =
                         <Button color='violet' basic>
                             <Icon name='heart' />
                         </Button>
-                        <Label basic color='violet' pointing='left'>
+                        <Label basic color='violet' pointing='left  '>
                             {likeCount}
                         </Label>
                     </Button>
