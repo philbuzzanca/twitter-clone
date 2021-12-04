@@ -2,8 +2,11 @@ import { useState } from "react"
 import { Form, Button } from "semantic-ui-react"
 import gql from 'graphql-tag'
 import { useMutation } from "@apollo/client"
+import { useNavigate } from "react-router"
 
-const Register = (props) => {
+const Register = () => {
+
+    const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
 
@@ -21,7 +24,7 @@ const Register = (props) => {
     const [addUser, { loading }] = useMutation(REGISTER_USER, {
         update(_, result) {
             console.log(result);
-            window.location = ('/');
+            navigate('/');
         },
         onError(err) {
             console.log(err);
