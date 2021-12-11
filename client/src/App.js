@@ -6,19 +6,22 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MenuBar from './components/MenuBar';
+import { AuthProvider } from './context/auth';
 
 const App = () => {
   return (
-    <Router>
-      <div className="ui container">
-        <MenuBar />
-        <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route exact path='/login' element={<Login />} />
-          <Route exact path='/register' element={<Register />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="ui container">
+          <MenuBar />
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/login' element={<Login />} />
+            <Route exact path='/register' element={<Register />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
