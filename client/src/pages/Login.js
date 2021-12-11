@@ -4,35 +4,30 @@ import gql from 'graphql-tag'
 import { useMutation } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
 
+import { useForm } from "../util/hooks"
+
 const Login = () => {
 
     const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
 
-    const [values, setValues] = useState({
+    const { onChange, onSubmit, values } = useForm(loginTheUser, {
         email: '',
-        password: '',
+        password: ''
     })
-
-    const onChange = (event) => {
-        setValues({ ...values, [event.target.name]: event.target.value })
-    }
 
     const [loginUser, { loading }] = useMutation(LOGIN_USER, {
         update(_, result) {
-            console.log(result);
             navigate('/');
         },
         onError(err) {
-            console.log(err);
             setErrors(err.graphQLErrors[0].extensions.errors ? err.graphQLErrors[0].extensions.errors : err);
         },
         variables: values
     })
 
-    const onSubmit = (event) => {
-        event.preventDefault();
+    function loginTheUser(){
         loginUser();
     }
 
