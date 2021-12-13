@@ -3,18 +3,23 @@ import { Grid } from "semantic-ui-react";
 import gql from 'graphql-tag';
 
 import PostCard from "../components/PostCard";
+import { AuthContext } from "../context/auth";
+import { useContext } from "react";
 
 const Home = () => {
     const {
         loading,
         data
     } = useQuery(FETCH_POSTS_QUERY);
-    return (
+
+    const { user } = useContext(AuthContext);
+
+    const homePage = user ? (
         <div>
             <Grid columns={1}>
                 <Grid.Column>
                     <Grid.Row>
-                        <h1 style={{display: 'block', marginBottom: '10px', fontSize: '2rem'}}>Recent posts</h1>
+                        <h1 style={{ display: 'block', marginBottom: '10px', fontSize: '2rem' }}>Recent posts</h1>
                     </Grid.Row>
                     <Grid.Row>
                         {loading ? (
@@ -28,7 +33,12 @@ const Home = () => {
                 </Grid.Column>
             </Grid>
         </div>
+    ) : (
+        <div>
+            <h1>Login or Register!</h1>
+        </div>
     )
+    return homePage;
 }
 
 const FETCH_POSTS_QUERY = gql`
