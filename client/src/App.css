@@ -3,3 +3,16 @@
     margin: auto;
     margin-top: 50px;
 }
+
+.ui.card {
+    width: 100%
+}
+
+.ui.one.column.grid {
+    margin: auto;
+    width: 70%;
+}
+
+.createPostFormInput {
+    width: 100%
+}

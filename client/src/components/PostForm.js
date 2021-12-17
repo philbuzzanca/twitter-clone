@@ -34,15 +34,17 @@ const PostForm = () => {
     return (
         <Form onSubmit={onSubmit}>
             <h3>Create a post:</h3>
-            <Form.Field>
-                <Form.Input
-                    name="body"
-                    onChange={onChange}
-                    value={values.body}
-                />
-                <Button type="submit" color="violet">
-                    Submit
-                </Button>
+            <Form.Field className="createPostForm">
+                <Form.Group>
+                    <Form.Input className="createPostFormInput"
+                        name="body"
+                        onChange={onChange}
+                        value={values.body}
+                    />
+                    <Button type="submit" color="violet">
+                        Submit
+                    </Button>
+                </Form.Group>
             </Form.Field>
         </Form>
     )
