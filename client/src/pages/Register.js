@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react"
 import { Form, Button } from "semantic-ui-react"
 import gql from 'graphql-tag'
 import { useMutation } from "@apollo/client"
-import { useNavigate } from "react-router"
+import { Navigate, useNavigate } from "react-router-dom"
 
 import { AuthContext } from "../context/auth"
 import { useForm } from "../util/hooks"
@@ -11,13 +11,6 @@ const Register = () => {
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
-    useEffect(() => {
-        if (context.user) {
-            console.log(context.user);
-            navigate('/');
-        }
-    }
-    )
 
     const [errors, setErrors] = useState({});
 
@@ -39,11 +32,13 @@ const Register = () => {
         variables: values
     })
 
-    function registerUser(){
+    function registerUser() {
         addUser();
     }
 
-    return (
+    return (context.user) ? (
+        <Navigate to="/" />
+    ) : (
         <div className="form-container">
             <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
                 <h1>Register</h1>

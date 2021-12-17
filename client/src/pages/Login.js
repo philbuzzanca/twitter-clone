@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react"
 import { Form, Button } from "semantic-ui-react"
 import gql from 'graphql-tag'
 import { useMutation } from "@apollo/client"
-import { useNavigate } from "react-router-dom"
+import { Navigate, Routes, Route, useNavigate } from "react-router-dom"
 
 import { AuthContext } from "../context/auth"
 import { useForm } from "../util/hooks"
@@ -11,13 +11,6 @@ const Login = () => {
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
-    useEffect(() => {
-        if (context.user) {
-            console.log(context.user);
-            navigate('/');
-        }
-    }
-    )
 
     const [errors, setErrors] = useState({});
 
@@ -41,7 +34,9 @@ const Login = () => {
         loginUser();
     }
 
-    return (
+    return (context.user) ? (
+        <Navigate to="/" />
+    ) : (
         <div className="form-container">
             <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
                 <h1>Login</h1>
