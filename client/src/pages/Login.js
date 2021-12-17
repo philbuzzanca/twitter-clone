@@ -1,8 +1,8 @@
-import { useContext, useState, useEffect } from "react"
+import { useContext, useState } from "react"
 import { Form, Button } from "semantic-ui-react"
 import gql from 'graphql-tag'
 import { useMutation } from "@apollo/client"
-import { Navigate, Routes, Route, useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 
 import { AuthContext } from "../context/auth"
 import { useForm } from "../util/hooks"
