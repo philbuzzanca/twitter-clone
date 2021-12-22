@@ -39,7 +39,7 @@ const Home = () => {
         </Grid>
     ) : (
         <div>
-            <h3 style={{ "margin-top": "2rem" }}><a href="/login">Login</a> or <a href="/register">Register!</a></h3>
+            <h3 style={{ marginTop: "2rem" }}><a href="/login">Login</a> or <a href="/register">Register!</a></h3>
         </div>
     )
     return homePage;

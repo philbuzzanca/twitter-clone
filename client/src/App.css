@@ -27,3 +27,7 @@ body {
 .createPostFormInput {
     width: 100%
 }
+
+.ui.violet.button:focus, .ui.violet.buttons .buttons:focus{
+    background-color: #6435c9
+}
