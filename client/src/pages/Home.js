@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Grid } from "semantic-ui-react";
+import { Grid, Transition } from "semantic-ui-react";
 import { useContext } from "react";
 
 import PostCard from "../components/PostCard";
@@ -19,27 +19,27 @@ const Home = () => {
         <Grid columns={1}>
             <Grid.Column>
                 <Grid.Row>
-                    <PostForm className='postForm'/>
+                    <PostForm className='postForm' />
                 </Grid.Row>
                 <Grid.Row>
                     <h1 style={{ display: 'block', marginBottom: '10px', fontSize: '2rem' }}>
                         Recent posts
                     </h1>
                 </Grid.Row>
-                <Grid.Row>
-                    {loading ? (
-                        <h1>Loading posts</h1>
-                    ) : (
-                        data.getPosts && data.getPosts.map((post) => (
-                            <PostCard post={post} key={post.id} />
-                        ))
-                    )}
-                </Grid.Row>
+                {loading ? (
+                    <h1>Loading posts</h1>
+                ) : (<Transition.Group>{
+                    data.getPosts && data.getPosts.map((post) => (
+                        <Grid.Row key={post.id}>
+                        <PostCard post={post} />
+                        </Grid.Row>
+                    ))
+                }</Transition.Group>)}
             </Grid.Column>
         </Grid>
     ) : (
         <div>
-            <h3 style={{"margin-top": "2rem"}}><a href="/login">Login</a> or <a href="/register">Register!</a></h3>
+            <h3 style={{ "margin-top": "2rem" }}><a href="/login">Login</a> or <a href="/register">Register!</a></h3>
         </div>
     )
     return homePage;
