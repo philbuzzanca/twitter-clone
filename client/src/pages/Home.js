@@ -39,7 +39,7 @@ const Home = () => {
         </Grid>
     ) : (
         <div>
-            <h1>Login or Register!</h1>
+            <h3 style={{"margin-top": "2rem"}}><a href="/login">Login</a> or <a href="/register">Register!</a></h3>
         </div>
     )
     return homePage;

@@ -11,7 +11,7 @@ const PostForm = () => {
         body: ''
     });
 
-    const [createPost] = useMutation(CREATE_POST_MUSTATION, {
+    const [createPost, { error }] = useMutation(CREATE_POST_MUSTATION, {
         variables: values,
         update(proxy, result) {
             const data = proxy.readQuery({
@@ -32,21 +32,31 @@ const PostForm = () => {
     }
 
     return (
-        <Form onSubmit={onSubmit}>
-            <h3>Create a post:</h3>
-            <Form.Field className="createPostForm">
-                <Form.Group>
-                    <Form.Input className="createPostFormInput"
-                        name="body"
-                        onChange={onChange}
-                        value={values.body}
-                    />
-                    <Button type="submit" color="violet">
-                        Submit
-                    </Button>
-                </Form.Group>
-            </Form.Field>
-        </Form>
+        <>
+            <Form onSubmit={onSubmit}>
+                <h3>Create a post:</h3>
+                <Form.Field className="createPostForm">
+                    <Form.Group>
+                        <Form.Input className="createPostFormInput"
+                            name="body"
+                            onChange={onChange}
+                            value={values.body}
+                            error={error ? true : false}
+                        />
+                        <Button type="submit" color="violet">
+                            Submit
+                        </Button>
+                    </Form.Group>
+                </Form.Field>
+            </Form>
+            {error && (
+                <div className="ui error message">
+                    <ul className="list">
+                        <li>{error.graphQLErrors[0].message}</li>
+                    </ul>
+                </div>
+            )}
+        </>
     )
 }
 
