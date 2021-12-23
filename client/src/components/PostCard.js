@@ -5,6 +5,7 @@ import { useContext } from "react"
 
 import { AuthContext } from "../context/auth"
 import LikeButton from "./LikeButton"
+import DeleteButton from './DeleteButton'
 
 const PostCard =
     ({ post: { body, createdAt, id, username, likes, likeCount, commentCount, comments } }) => {
@@ -38,11 +39,7 @@ const PostCard =
                         </Label>
                     </Button>
                     <LikeButton user={user} post={{id, likeCount, likes}} />
-                    {user.username === username && (
-                        <Link to={'/'} onClick={()=>{}}>
-                        <Icon name='trash' style={{float: 'right', marginTop: '0.6rem'}}/>
-                        </Link>
-                    )}
+                    {user.username === username && <DeleteButton postId={id}/>}
                 </Card.Content>
             </Card>
         )

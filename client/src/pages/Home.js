@@ -31,7 +31,7 @@ const Home = () => {
                 ) : (<Transition.Group>{
                     data.getPosts && data.getPosts.map((post) => (
                         <Grid.Row key={post.id}>
-                        <PostCard post={post} />
+                            <PostCard post={post} />
                         </Grid.Row>
                     ))
                 }</Transition.Group>)}

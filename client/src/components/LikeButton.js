@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { Button, Icon, Label } from "semantic-ui-react"
 import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
