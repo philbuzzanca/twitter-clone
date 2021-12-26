@@ -8,18 +8,22 @@ import LikeButton from '../components/LikeButton';
 import DeleteButton from '../components/DeleteButton';
 import { AuthContext } from '../context/auth';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const SinglePost = ({ props }) => {
     const { user } = useContext(AuthContext);
-
+    const navigate = useNavigate();
     let { postId } = useParams();
-
     const { data } = useQuery(FETCH_POST_QUERY, {
         variables: {
             postId
         }
     })
+
+    function deletePostCallback(){
+        navigate('/');
+    }
 
     let postMarkup;
     if (!data) {
@@ -53,7 +57,7 @@ const SinglePost = ({ props }) => {
                                 </Label>
                             </Button>
                             <LikeButton user={user} post={{ id, likeCount, likes }} />
-                            {user.username === username && <DeleteButton postId={id} />}
+                            {user.username === username && <DeleteButton postId={id} callback={deletePostCallback}/>}
                         </Card.Content>
                     </Card>
                     </Grid.Column>
