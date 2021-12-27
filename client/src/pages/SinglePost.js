@@ -1,35 +1,57 @@
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/client';
-import { Button, Card, Grid, Icon, Image, Label } from 'semantic-ui-react';
+import { useMutation, useQuery } from '@apollo/client';
+import { Button, Card, Form, Grid, Icon, Image, Label } from 'semantic-ui-react';
 import moment from 'moment';
-import { useContext } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import LikeButton from '../components/LikeButton';
 import DeleteButton from '../components/DeleteButton';
 import { AuthContext } from '../context/auth';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 const SinglePost = ({ props }) => {
     const { user } = useContext(AuthContext);
+    const commentInputRef = useRef(null);
     const navigate = useNavigate();
     let { postId } = useParams();
+
+    const [comment, setComment] = useState('');
+
     const { data } = useQuery(FETCH_POST_QUERY, {
         variables: {
             postId
         }
     })
 
-    function deletePostCallback(){
+    const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
+        update() {
+            setComment('');
+            commentInputRef.current.blur();
+        },
+        variables: {
+            postId,
+            body: comment
+        }
+    })
+
+    function deletePostCallback() {
         navigate('/');
     }
 
     let postMarkup;
-    if (!data) {
+
+
+    if (!user) {
+        postMarkup = <Navigate to='/' />
+    } else if (!data) {
         postMarkup = <p>Loading post...</p>
     } else {
-        const { id, body, createdAt, username, likes, likeCount, commentCount } = data.getPost;
+        const { id, body, createdAt, username, likes, likeCount, comments, commentCount } = data.getPost;
+        let reverseComments = [...comments];
+        reverseComments = reverseComments.reverse();
+
         postMarkup = (
             <Grid>
                 <Grid.Row>
@@ -57,9 +79,45 @@ const SinglePost = ({ props }) => {
                                 </Label>
                             </Button>
                             <LikeButton user={user} post={{ id, likeCount, likes }} />
-                            {user.username === username && <DeleteButton postId={id} callback={deletePostCallback}/>}
+                            {user.username === username && <DeleteButton postId={id} callback={deletePostCallback} />}
                         </Card.Content>
                     </Card>
+                        {user &&
+                            <Card fluid>
+                                <Card.Content>
+                                    <p>Post a comment</p>
+                                    <Form>
+                                        <div className="ui action input fluid">
+                                            <input
+                                                type="text"
+                                                name="comment"
+                                                value={comment}
+                                                onChange={event => setComment(event.target.value)}
+                                                ref={commentInputRef}
+                                            />
+                                            <button type="submit"
+                                                className="ui button violet"
+                                                disabled={comment.trim() === ''}
+                                                onClick={submitComment}
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </Form>
+                                </Card.Content>
+                            </Card>}
+                        {reverseComments.map(comment => (
+                            <Card fluid key={comment.id}>
+                                <Card.Content>
+                                    {user && user.username === comment.username && (
+                                        <DeleteButton postId={id} commentId={comment.id} />
+                                    )}
+                                    <Card.Header>{comment.username}</Card.Header>
+                                    <Card.Meta>{moment(comment.createdAt).fromNow(true)}</Card.Meta>
+                                    <Card.Description>{comment.body}</Card.Description>
+                                </Card.Content>
+                            </Card>
+                        ))}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -67,6 +125,18 @@ const SinglePost = ({ props }) => {
     }
     return postMarkup;
 }
+
+const SUBMIT_COMMENT_MUTATION = gql`
+    mutation($postId: ID!, $body: String!){
+        createComment(postId: $postId, body: $body){
+            id
+            comments{
+                id body createdAt username
+            }
+            commentCount
+        }
+    }
+`
 
 const FETCH_POST_QUERY = gql`
     query($postId: ID!){
