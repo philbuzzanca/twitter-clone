@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Grid, Transition } from "semantic-ui-react";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import PostCard from "../components/PostCard";
 import PostForm from "../components/PostForm";
@@ -39,7 +40,7 @@ const Home = () => {
         </Grid>
     ) : (
         <div>
-            <h3 style={{ marginTop: "2rem" }}><a href="/login">Login</a> or <a href="/register">Register!</a></h3>
+            <h3 style={{ marginTop: "2rem" }}><Link to="/login">Login</Link> or <Link to="/register">Register!</Link></h3>
         </div>
     )
     return homePage;
