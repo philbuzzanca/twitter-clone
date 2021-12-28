@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 
-const SinglePost = ({ props }) => {
+const SinglePost = () => {
     const { user } = useContext(AuthContext);
     const commentInputRef = useRef(null);
     const navigate = useNavigate();

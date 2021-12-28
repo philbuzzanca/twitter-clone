@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import MenuBar from './components/MenuBar';
 import { AuthProvider } from './context/auth';
 import SinglePost from './pages/SinglePost';
+import UserPage from './pages/UserPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/register' element={<Register />} />
             <Route exact path='/posts/:postId' element={<SinglePost />} />
+            <Route exact path='/user/:username' element={<UserPage />} />
           </Routes>
         </div>
       </Router>

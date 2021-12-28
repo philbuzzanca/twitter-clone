@@ -27,6 +27,15 @@ module.exports = {
             } catch(err) {
                 throw new Error(err);
             }
+        },
+
+        async getPostsByUser(_, { username }){
+            try {
+                const posts = await Post.find({ username: username });
+                return posts;
+            } catch(err) {
+                throw new Error(err);
+            }
         }
     },
 
