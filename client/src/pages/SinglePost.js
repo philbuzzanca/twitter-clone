@@ -8,7 +8,7 @@ import LikeButton from '../components/LikeButton';
 import DeleteButton from '../components/DeleteButton';
 import { AuthContext } from '../context/auth';
 import { useParams } from 'react-router-dom';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 
 const SinglePost = () => {
@@ -63,7 +63,7 @@ const SinglePost = () => {
                     </Grid.Column>
                     <Grid.Column width={10} ><Card>
                         <Card.Content>
-                            <Card.Header>{username}</Card.Header>
+                            <Card.Header as={Link} to={`/user/${username}`}>{username}</Card.Header>
                             <Card.Meta as='div'>{moment(createdAt).fromNow(true)}</Card.Meta>
                             <Card.Description>
                                 {body}
@@ -112,7 +112,7 @@ const SinglePost = () => {
                                     {user && user.username === comment.username && (
                                         <DeleteButton postId={id} commentId={comment.id} />
                                     )}
-                                    <Card.Header>{comment.username}</Card.Header>
+                                    <Card.Header as={Link} to={`/user/${comment.username}`}>{comment.username}</Card.Header>
                                     <Card.Meta>{moment(comment.createdAt).fromNow(true)}</Card.Meta>
                                     <Card.Description>{comment.body}</Card.Description>
                                 </Card.Content>
