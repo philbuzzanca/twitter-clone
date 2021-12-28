@@ -23,11 +23,11 @@ const Register = () => {
 
     const [addUser, { loading }] = useMutation(REGISTER_USER, {
         update(_, result) {
-            context.login(result.data.login);
             navigate('/');
         },
         onError(err) {
-            setErrors(err.graphQLErrors[0].extensions.errors ? err.graphQLErrors[0].extensions.errors : err);
+            console.log(err.graphQLErrors[0]);
+            setErrors(err.graphQLErrors[0] ? err.graphQLErrors[0].extensions.errors : '?');
         },
         variables: values
     })

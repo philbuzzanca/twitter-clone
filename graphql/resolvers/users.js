@@ -26,14 +26,14 @@ module.exports = {
 
             const user = await User.findOne({ email });
             if(!user){
-                errors.general = 'Invalid login';
-                throw new UserInputError('Invalid login', { errors });
+                errors.general = 'Incorrect email or password.';
+                throw new UserInputError('Incorrect email or password.', { errors });
             }
 
             const match = await bcrypt.compare(password, user.password);
             if(!match){
-                errors.general = 'Invalid login';
-                throw new UserInputError('Invalid login', { errors });
+                errors.general = 'Incorrect email or password.';
+                throw new UserInputError('Incorrect email or password.', { errors });
             }
 
             const token = generateToken(user);
@@ -55,17 +55,17 @@ module.exports = {
             // make sure user/email doesn't already exist
             const user = await User.findOne({ username });
             if(user){
-                throw new UserInputError('Username is taken', {
+                throw new UserInputError('Username is taken.', {
                     errors: {
-                        username: 'This username is taken.'
+                        username: 'Username is taken'
                     }
                 });
             }
             const checkEmail = await User.findOne({ email });
             if(checkEmail){
-                throw new UserInputError('Email already in use', {
+                throw new UserInputError('Email already in use.', {
                     errors: {
-                        email: 'This email is already registered.'
+                        email: 'Email already in use'
                     }
                 });
             }
