@@ -23,6 +23,7 @@ const Register = () => {
 
     const [addUser, { loading }] = useMutation(REGISTER_USER, {
         update(_, result) {
+            context.login(result.data.register);
             navigate('/');
         },
         onError(err) {
