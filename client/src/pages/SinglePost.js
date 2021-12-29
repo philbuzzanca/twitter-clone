@@ -43,9 +43,7 @@ const SinglePost = () => {
     let postMarkup;
 
 
-    if (!user) {
-        postMarkup = <Navigate to='/' />
-    } else if (!data) {
+    if (!data) {
         postMarkup = <p>Loading post...</p>
     } else {
         const { id, body, createdAt, username, likes, likeCount, comments, commentCount } = data.getPost;
@@ -79,7 +77,7 @@ const SinglePost = () => {
                                 </Label>
                             </Button>
                             <LikeButton user={user} post={{ id, likeCount, likes }} />
-                            {user.username === username && <DeleteButton postId={id} callback={deletePostCallback} />}
+                            {user && user.username === username && <DeleteButton postId={id} callback={deletePostCallback} />}
                         </Card.Content>
                     </Card>
                         {user &&

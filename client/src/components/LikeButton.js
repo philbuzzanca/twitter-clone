@@ -2,6 +2,7 @@ import { Button, Icon, Label } from "semantic-ui-react"
 import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 const LikeButton = ({ post: { id, likeCount, likes }, user }) => {
     const [liked, setLiked] = useState(false);
@@ -26,8 +27,15 @@ const LikeButton = ({ post: { id, likeCount, likes }, user }) => {
         </Button>
     )
 
-    return (
+    return user ? (
         <Button as='div' labelPosition='right' onClick={likePost}>
+            {likeButton}
+            <Label basic color='violet' pointing='left'>
+                {likeCount}
+            </Label>
+        </Button>
+    ) : (
+        <Button as={Link} to='/login' labelPosition='right' >
             {likeButton}
             <Label basic color='violet' pointing='left'>
                 {likeCount}

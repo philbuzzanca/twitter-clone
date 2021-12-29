@@ -1,14 +1,11 @@
 import gql from 'graphql-tag';
-import { useContext } from "react"
 import { useQuery } from '@apollo/client';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Grid, Transition } from 'semantic-ui-react';
 
-import { AuthContext } from "../context/auth";
 import PostCard from '../components/PostCard';
 
 const UserPage = () => {
-    const { user } = useContext(AuthContext)
 
     let { username } = useParams();
 
@@ -19,9 +16,7 @@ const UserPage = () => {
     });
 
     let postMarkup;
-    if (!user) {
-        postMarkup = <Navigate to='/' />
-    } else if (!data) {
+    if (!data) {
         postMarkup = <p>Loading ...</p>
     } else {
         let reverseData = [...data.getPostsByUser];
@@ -33,7 +28,7 @@ const UserPage = () => {
                     <Grid.Column>
                         <Grid.Row>
                             <h1 style={{ display: 'block', marginBottom: '10px', fontSize: '2rem' }}>
-                                Posts
+                                Posts by {username}
                             </h1>
                         </Grid.Row>
                         {loading ? (

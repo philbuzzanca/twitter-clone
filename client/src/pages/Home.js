@@ -16,12 +16,14 @@ const Home = () => {
 
     const { user } = useContext(AuthContext);
 
-    const homePage = user ? (
+    const homePage = (
         <Grid columns={1}>
             <Grid.Column>
-                <Grid.Row>
-                    <PostForm className='postForm' />
-                </Grid.Row>
+                {user &&
+                    <Grid.Row>
+                        <PostForm className='postForm' />
+                    </Grid.Row>
+                }
                 <Grid.Row>
                     <h1 style={{ display: 'block', marginBottom: '10px', fontSize: '2rem' }}>
                         Recent posts
@@ -38,10 +40,6 @@ const Home = () => {
                 }</Transition.Group>)}
             </Grid.Column>
         </Grid>
-    ) : (
-        <div>
-            <h3 style={{ marginTop: "2rem" }}><Link to="/login">Login</Link> or <Link to="/register">Register!</Link></h3>
-        </div>
     )
     return homePage;
 }
