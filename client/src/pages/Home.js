@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { Grid, Transition } from "semantic-ui-react";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 
 import PostCard from "../components/PostCard";
 import PostForm from "../components/PostForm";
